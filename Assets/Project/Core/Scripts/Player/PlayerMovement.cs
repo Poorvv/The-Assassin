@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         if(moveDirection.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotataion = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotataion, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotataion, rotationSpeed * Time.deltaTime);//TODO: Fine tune rotation speed
         }
         playerAnimation.SetMovementSpeed(_moveInput.magnitude);
     }
