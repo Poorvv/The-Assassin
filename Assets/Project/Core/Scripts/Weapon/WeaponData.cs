@@ -6,6 +6,7 @@ public class WeaponData : ScriptableObject
     public WeaponType WeaponType;
     public float Range;
     public int Damage;
-    public float FireRate;
+    public int ShotsPerFire;
+    public float FireInterval;
     public GameObject WeaponPrefab;
 }

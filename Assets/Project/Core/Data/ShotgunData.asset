@@ -15,5 +15,6 @@ MonoBehaviour:
   WeaponType: 1
   Range: 4
   Damage: 100
-  FireRate: 5
+  ShotsPerFire: 5
+  FireInterval: 1
   WeaponPrefab: {fileID: 4973551444341769633, guid: 91f07a27014f64a458f1d33d59b4b6fe, type: 3}

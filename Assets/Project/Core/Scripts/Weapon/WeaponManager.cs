@@ -6,6 +6,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] Transform weaponHolder;
     [SerializeField] PlayerAnimation playerAnimation;
     [SerializeField] PlayerCombat playerCombat;
+    public Weapon CurrentWeapon { get; private set; }
     public WeaponData CurrentWeaponData { get; private set; }
     private void Awake()
     {
@@ -13,7 +14,7 @@ public class WeaponManager : MonoBehaviour
     }
     public void InitWeapon(WeaponData weaponData)
     {
-        Instantiate(weaponData.WeaponPrefab, weaponHolder);
+        CurrentWeapon = Instantiate(weaponData.WeaponPrefab, weaponHolder).GetComponent<Weapon>();
 
         CurrentWeaponData = weaponData;
         playerCombat.InitCombatData(weaponData);

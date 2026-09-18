@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2160500089622126164}
   - component: {fileID: 705286391584508714}
   - component: {fileID: 4859252684588624981}
-  - component: {fileID: 8429790323716836223}
+  - component: {fileID: 2972575042797474801}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8429790323716836223
+--- !u!114 &2972575042797474801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8390835337796195274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb1f7a3bbaab7741a0e4d5a744acc27, type: 3}
+  m_Script: {fileID: 11500000, guid: 80ad2033853517a4f9e65c91e31cd4aa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  m_EditorClassIdentifier: Assembly-CSharp::HitScanWeapon
   weaponData: {fileID: 11400000, guid: d63c537d2728de24f937c64d6268e78b, type: 2}

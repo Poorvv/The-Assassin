@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2988204461297672156}
   - component: {fileID: 4974003256594514659}
   - component: {fileID: 3171237145148721474}
-  - component: {fileID: 6001709333056089735}
+  - component: {fileID: 1868870567508187895}
   m_Layer: 0
   m_Name: Slience Pistol
   m_TagString: Untagged
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6001709333056089735
+--- !u!114 &1868870567508187895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5232934861676124737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb1f7a3bbaab7741a0e4d5a744acc27, type: 3}
+  m_Script: {fileID: 11500000, guid: 80ad2033853517a4f9e65c91e31cd4aa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  m_EditorClassIdentifier: Assembly-CSharp::HitScanWeapon
   weaponData: {fileID: 11400000, guid: 53cecd4d113d22948b1bb12fdf049152, type: 2}

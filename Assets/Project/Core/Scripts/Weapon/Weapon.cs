@@ -1,8 +1,14 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
-    [SerializeField] WeaponData weaponData;
+    [SerializeField] protected WeaponData weaponData;
+    [SerializeField] protected Transform muzzle;
+    [SerializeField] protected Transform aimPoint;
+
     public WeaponData Data => weaponData;
+    public Transform Muzzle => muzzle;
+    public Transform AimPoint => aimPoint;
+    public abstract void Fire(Vector3 targetPosition);
 
 }
