@@ -6,9 +6,9 @@ public class HitScanWeapon : Weapon
     // Implement the abstract method from Weapon
     public override void Fire(Vector3 targetPosition)
     {
-        Vector3 direction = (targetPosition - transform.position).normalized;
+        Vector3 direction = (targetPosition - aimPoint.position).normalized;
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
+        if (Physics.Raycast(aimPoint.position, direction, out hit, Mathf.Infinity))
         {
             EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
 

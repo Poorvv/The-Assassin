@@ -4,11 +4,19 @@ public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] WeaponManager weaponManager;
     [SerializeField] LayerMask _enemyLayer;
+    [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] Transform aimTarget;
+    [SerializeField] float aimReturnSmoothTime = 0.2f;
+    private Vector3 _defaultAimPointPos;
     private Collider _currentTarget;
     private float _nextFireTime;
     private float _detectionRange;
+    private Vector3 _aimTargetVelocity;
 
+    void Awake()
+    {
+        _defaultAimPointPos = aimTarget.localPosition;
+    }
     public void InitCombatData(WeaponData weaponData)
     {
         _detectionRange = weaponData.Range;
@@ -16,22 +24,20 @@ public class PlayerCombat : MonoBehaviour
     private void Update()
     {
         DetectNearbyEnemies();
-        if (weaponManager.CurrentWeapon != null)
+        if(_currentTarget == null)
         {
-            //Transform aimPoint = weaponManager.CurrentWeapon.AimPoint;
-
-            //Debug.DrawRay(
-            //    aimPoint.position,
-            //    aimPoint.forward * 5f,
-            //    Color.blue
-            //);
+            ResetAimTarget();
+            return;
         }
         AimAtTarget();
-        
-        if (IsAimedAtTarget())
+        if (CanWeaponSeeTarget())
         {
-            Shoot();
+            if (IsAimedAtTarget())
+            {
+                Shoot();
+            }
         }
+        
     }
     void DetectNearbyEnemies()
     {
@@ -67,54 +73,76 @@ public class PlayerCombat : MonoBehaviour
         }
         return false;
     }
-    void AimAtTarget()
+    private void AimAtTarget()
     {
-        if(_currentTarget == null)
-            return;
-        aimTarget.position = _currentTarget.transform.position;
-        /*Vector3 direction = (_currentTarget.transform.position - transform.position).normalized;
-        direction.y = 0; // Keep the player upright
-        if(direction.sqrMagnitude > 0.001f)
+        if (_currentTarget == null)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 720f * Time.deltaTime);
-        }*/
+            ResetAimTarget();
+            return;
+        }
+
+        if (Time.time < _nextFireTime)
+        {
+            ResetAimTarget();
+            return;
+        }
+
+        if (!CanWeaponSeeTarget())
+        {
+            ResetAimTarget();
+            return;
+        }
+
+        aimTarget.position = _currentTarget.transform.position;
     }
-    bool IsAimedAtTarget()
+    private bool IsAimedAtTarget()
     {
         if (_currentTarget == null)
             return false;
-        //Vector3 directionToTarget = (_currentTarget.transform.position - lookingPoint.position).normalized;
-        //float alignment = Vector3.Dot(lookingPoint.forward, directionToTarget);
-        //return alignment > 0.99f; // Adjust the threshold as needed
-        //Transform muzzle = weaponManager.CurrentWeapon.Muzzle;
 
-        //Vector3 direction =
-        //    (aimTarget.position - muzzle.position).normalized;
-
-        //float alignment =
-        //    Vector3.Dot(muzzle.forward, direction);
-
-        //return alignment > 0.98f;
         Transform aimPoint = weaponManager.CurrentWeapon.AimPoint;
 
-        Vector3 directionToTarget =
-            (aimTarget.position - aimPoint.position).normalized;
+        Vector3 directionToTarget = (_currentTarget.transform.position - aimPoint.position).normalized;
 
         float alignment =
             Vector3.Dot(aimPoint.forward, directionToTarget);
 
+        //Debug.Log($"Alignment: {alignment}");
+
         return alignment >= 0.98f;
+    }
+    private bool CanWeaponSeeTarget()
+    {
+        Transform muzzle = weaponManager.CurrentWeapon.Muzzle;
+
+        Vector3 direction =
+            _currentTarget.transform.position - muzzle.position;
+
+        float distance = direction.magnitude;
+
+        return !Physics.Raycast(
+            muzzle.position,
+            direction.normalized,
+            distance,
+            obstacleLayer
+        );
     }
     void Shoot()
     {
-        if (_currentTarget == null)
+        if (_currentTarget == null || Time.time < _nextFireTime)
             return;
-        if(Time.time < _nextFireTime)
-            return;
-        //AimAtTarget();
+            
         weaponManager.CurrentWeapon.Fire(_currentTarget.transform.position);
         _nextFireTime = Time.time + weaponManager.CurrentWeaponData.FireInterval;
+    }
+    void ResetAimTarget()
+    {
+        aimTarget.localPosition = Vector3.SmoothDamp(
+        aimTarget.localPosition,
+        _defaultAimPointPos,
+        ref _aimTargetVelocity,
+        aimReturnSmoothTime
+        );
     }
 
     //Debugging purposes, visualize the detection range in the editor

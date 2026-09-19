@@ -7,8 +7,8 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected Transform aimPoint;
 
     public WeaponData Data => weaponData;
-    public Transform Muzzle => muzzle;
     public Transform AimPoint => aimPoint;
+    public Transform Muzzle => muzzle;
     public abstract void Fire(Vector3 targetPosition);
 
 }
